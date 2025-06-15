@@ -1,0 +1,19 @@
+
+
+
+
+					//Update Employee Rest API
+	@PutMapping("/employees/{id}")
+	public ResponseEntity<Employee> updateEmployee(@PathVariable Long id,@RequestBody Employee employeeWithUpdation) {
+		Employee employeeToBeUpdate = employeeRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Employee does not exist with id : "+id));
+		
+			employeeToBeUpdate.setFirstName(employeeWithUpdation.getFirstName());
+			employeeToBeUpdate.setLastName(employeeWithUpdation.getLastName());
+			employeeToBeUpdate.setEmailId(employeeWithUpdation.getEmailId());
+			Employee updatedEmployee = employeeRepository.save(employeeToBeUpdate);
+			return ResponseEntity.ok(updatedEmployee);
+	}
+	
+	
+	This is pretty simple...noting here to explain.....

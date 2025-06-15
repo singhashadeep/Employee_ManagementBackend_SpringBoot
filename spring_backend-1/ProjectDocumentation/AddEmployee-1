@@ -1,0 +1,83 @@
+ 		
+ 		*******AddEmployeeAPICreation************
+ 		
+ 		open EmployeeController.java
+ 		
+ 		 Employee type ka function bnayenge...jisme return type Employee type ka hoga...kyuki add kr re hai ham entries
+ 		 to Employee class me jo jo variables defined hai un sab ka hi object return hoga...
+ 		 
+ 		 
+ 		 
+ 		 public Employee createEmployee(Employee employee) {
+ 		 
+			return employeeRepository.save(employee);
+			
+					}
+ 		 
+ 		 Post request contain JSON request body and that JSON request body we have to directly map to employee object.
+ 		 so for that we will use @RequestBody annotation.
+ 		 
+ 		 
+ 		 
+ 		 
+ 		 
+ 		 @PostMapping("/employees")
+ 		 
+		 This maps HTTP POST requests sent to /employees to this method.
+		 It means when a client (like Angular or Postman) sends a POST request to http://localhost:8080/employees, this method will handle it.
+		
+		
+		
+		
+		 @RequestBody Employee employee
+		 
+		 Tells Spring to take the JSON in the request body, convert (deserialize) it to an Employee object.
+		 Example request body from Angular/Postman:
+						{
+				  			"firstName": "John",
+				  			"lastName": "Doe",
+				 		    "emailId": "john.doe@example.com"
+						}
+						
+						
+		employeeRepository.save(employee)
+		
+			Saves the Employee object into the database using Spring Data JPA.
+
+			employeeRepository is typically an interface extending JpaRepository.
+
+			After saving, it returns the saved employee, which may now include a generated ID.
+			
+			
+			
+	    public Employee createEmployee(...)
+				
+				The method returns the saved Employee object as a JSON response.
+
+				The client (e.g., your Angular app) receives the response back like:
+
+
+						{
+						     "firstName": "Gunjan",
+   							 "lastName":"Deep",
+                             "emailId": "gunjandeep@ril.com"
+						}
+
+
+			Behind the Scenes
+			
+			Angular sends a POST request to /employees with employee data.
+			
+			Spring receives the request and maps JSON to an Employee object.
+			
+			The object is saved to the database using employeeRepository.
+			
+			The saved object (now with an ID) is returned as JSON to the frontend.
+
+
+	*******After this we wll create Angular component for the same backend... "Create Employee"**********
+
+
+
+
+

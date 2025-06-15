@@ -1,0 +1,31 @@
+
+
+public Map<String,Boolean> deleteEmployee(Long id){}
+
+yaha ham return type Map le rahe hai taki delete hua vo ek string me mil jaye aur boolena me ha ya na....ki value
+
+@DeleteMapping("/employees/{id}") // so this annotation will handle all delete calls...
+
+@PathVariable - using this @DeleteMapping("/employees/{id}") ki id ko hamne method argument se link kr diya hai...
+
+now...to delete an employee...sabse pahle hamko vo employee with id milna chahie..ya retrieve krna chahie..so lets do that
+
+ Employee employeeToBeUpdate = employeeRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Employee does not exist with id : "+id));
+				
+				now using employeeRepository.delete(employee); hamne entry delete kr di...
+				
+	ab ek Map bana ke usme message bhejte hai client ko...
+	
+	
+	
+	Map<String,Boolean> response = new HashMap<String, Boolean>();
+		response.put("deleted", Boolean.TRUE);
+		return ResponseEntity.ok(response);
+		
+		ab kyuki ham return jo kr re hai vo responseEntity type ka hai to isilie hamko method signature bhi usi type ka krna hoga....
+		
+		public ResponseEntity<Map<String,Boolean>>deleteEmployee(@PathVariable Long id)
+		
+		
+														****DONE!*****

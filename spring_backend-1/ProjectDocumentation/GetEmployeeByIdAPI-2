@@ -1,0 +1,86 @@
+
+						*******Get Employee by Id  REST API ************
+
+			@GetMapping("/employees/{id}")
+						public Employee getEmployeeById(Long id) {
+							
+						}
+						
+			ab hamko jo GetMapping me id ayi hai usko method ke java variable me store krvana hoga...
+			taki us id ki jo entry hai vo access ho sake...
+			
+			to uske liye hame @PathVariable annotation use krni hogi...
+			
+
+		iske baad method me logic likhna hoga jisme ham id k basis pe database se data retrieve krenge....
+		
+		Employee employee = employeeRepository.findById(id)
+				.orElseThrow(()->new ResourceNotFoundException("Employee does not exist with id : "+id));
+		
+		ab iske baad ham return krenge httpsstatus to client...to uske liye method signature me hamko ResponseEntity class ko use krna hoga
+		aur usi me 200 status jo ki 'ok' hota hai vo return hoga...to method ka syntax ab kuch aisa ho jayega...
+		
+						*******************Line-by-Line Explanation:*******************
+						
+						//Get Employee by Id
+				@GetMapping("/employees/{id}")
+				public ResponseEntity<Employee>getEmployeeById(@PathVariable Long id) {
+					Employee employee = employeeRepository.findById(id)
+							.orElseThrow(()->new ResourceNotFoundException("Employee does not exist with id : "+id));
+					return ResponseEntity.ok(employee);
+				}
+				
+					@GetMapping("/employees/{id}")
+				Maps HTTP GET requests to this method.
+				
+				"/employees/{id}" means the URL contains a path variable — e.g., /employees/68346.
+				
+				{id} is a placeholder for a dynamic value (employee ID).
+				
+				
+				public ResponseEntity<Employee> getEmployeeById(...)
+				
+				Defines the method that handles the GET request.
+				Returns a ResponseEntity<Employee>:
+				This is a wrapper around the HTTP response.
+				Lets you customize the status code, headers, and body.
+				Returning ResponseEntity.ok(employee) sends a 200 OK response with the employee object.
+				
+					
+				@PathVariable Long id
+
+				Tells Spring to extract the {id} from the URL and pass it as a method parameter.
+
+				So if the URL is /employees/5, the method receives id = 5.
+				
+				
+				
+				employeeRepository.findById(id)
+				Uses Spring Data JPA to look up the employee in the database by ID.
+
+				Returns an Optional<Employee>, because the employee might or might not exist.
+	
+	
+				return ResponseEntity.ok(employee);
+				If the employee is found, return a ResponseEntity with:
+
+				HTTP status 200 OK
+
+				The employee object in the response body (usually converted to JSON).
+	
+					
+									| Part                              | Purpose                         |
+				| --------------------------------- | --------------------------------------------------- |
+				| `@GetMapping("/employees/{id}")`  | Handles GET requests for a specific employee        |
+				| `@PathVariable Long id`           | Extracts the `id` from the URL                      |
+				| `employeeRepository.findById(id)` | Looks for the employee in the DB                    |
+				| `orElseThrow(...)`                | Throws a custom error if not found                  |
+				| `ResponseEntity.ok(...)`          | Sends back a 200 OK response with the employee data |
+				
+				
+				
+											**********END***********
+									
+	
+	
+	
